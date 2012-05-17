@@ -12,3 +12,12 @@ then
     echo "Connect MongoDB"
     mongod --dbpath=/Users/ruibando/Mongo/mongodb_data/
 fi
+
+
+
+
+
+
+
+
+
