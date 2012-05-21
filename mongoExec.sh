@@ -41,6 +41,11 @@ echo -n "            query ? >"
 read INPUT
 IN_QUERY=${INPUT}
 
+#Seclect Field
+#echo -n "      which field ? >"
+#read INPUT
+#IN_FIELD=${INPUT}
+
 #作成されるファイルの準備
 DATETIME=`date +%Y%m%d%H%M%S`
 mkdir /tmp/${IN_NAME}_${DATETIME}/
@@ -56,6 +61,7 @@ echo "              name: ${IN_NAME}"
 echo "            dbname: ${IN_DB} "
 echo "        collection: ${IN_COLLECTION}"
 echo "             query: ${IN_QUERY}"
+#echo "             field: ${IN_FIELD}"
 echo "        explain.js: ${OUTPUT_EXPLAIN_FILE}"
 echo "          query.js: ${OUTPUT_QUERY_FILE}"
 echo "         queryfile: ${EXPLAIN_FILE}"
@@ -101,10 +107,15 @@ fi
 QUERY="db.${IN_COLLECTION}.find(query)"
 echo 'var query = ""' >> ${OUTPUT_QUERY_FILE}
 if [ "${IN_QUERY}" != "" ] ; then
- echo "query = ${IN_QUERY};" >> ${OUTPUT_QUERY_FILE}
+# if [ "${IN_FIELD}" != "" ] ; then
+#  echo "query = \"${IN_QUERY}, {${IN_FIELD}:1}\"" >> ${OUTPUT_QUERY_FILE}
+# else
+  echo "query = ${IN_QUERY};" >> ${OUTPUT_QUERY_FILE}
+# fi
 fi
 
-echo "${QUERY}.forEach(print);" >> ${OUTPUT_QUERY_FILE}
+
+echo "${QUERY}.forEach(printjson);" >> ${OUTPUT_QUERY_FILE}
 
 #------------------------------------------#
 # Execute MongoDB
